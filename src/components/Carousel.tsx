@@ -22,11 +22,20 @@ const Carousel = () => {
       sx={{
         flexGrow: 1,
         m: 0,
-        backgroundColor: "primary.main",
+        backgroundColor: "black",
         py: 1,
       }}
     >
-      <Typography variant="h6" sx={{ textAlign: "center", color: "white" }}>
+      <Typography
+        sx={{
+          textAlign: "center",
+          color: "#90EE90",
+          fontSize: "0.6em",
+          fontWeight: "800",
+          textTransform: "uppercase",
+          letterSpacing: "0.2em",
+        }}
+      >
         {items[index].text}
       </Typography>
     </Box>

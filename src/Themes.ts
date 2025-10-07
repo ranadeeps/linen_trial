@@ -7,11 +7,17 @@ export const theme = createTheme({
     },
     text: {
       primary: "#000000",
-      secondary: "#90EE90",
+      secondary: "#FFFFFF",
     },
   },
   typography: {
     fontFamily: "Montserrat",
+    h5: {
+      letterSpacing: "0.1em",
+    },
+    h6: {
+      letterSpacing: "0.1em",
+    },
     body1: {
       letterSpacing: "0.1em",
     },

@@ -34,7 +34,7 @@ export const FeedbackForm = () => {
           mx: "auto",
         }}
       >
-        <Typography textTransform={"uppercase"}>
+        <Typography textTransform={"uppercase"} fontWeight={"bold"}>
           Share your experience
         </Typography>
         <FormControl sx={{ display: "flex", flexDirection: "column" }}>
@@ -59,6 +59,7 @@ export const FeedbackForm = () => {
             row
             aria-labelledby="demo-row-radio-buttons-group-label"
             name="row-radio-buttons-group"
+            sx={{ display: "flex", flexDirection: "row" }}
           >
             <FormControlLabel
               value="under_18"

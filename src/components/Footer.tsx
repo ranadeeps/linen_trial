@@ -26,14 +26,20 @@ export const Footer = () => {
             textAlign={"start"}
             fontSize={"small"}
           >
-            <PhoneIcon fontSize="small"></PhoneIcon> +91 70759 67089
+            <Box display="flex" alignItems="center" gap={1}>
+              <PhoneIcon fontSize="small"> </PhoneIcon>
+              <span> +91 70759 67089</span>
+            </Box>
           </Typography>
           <Typography
             color="text.secondary"
             textAlign={"start"}
             fontSize={"small"}
           >
-            <EmailIcon fontSize="small" /> support@thetruetouch.in
+            <Box display="flex" alignItems="center" gap={1}>
+              <EmailIcon fontSize="small" />{" "}
+              <span> support@thetruetouch.in</span>
+            </Box>
           </Typography>
         </Box>
         <Box display={"flex"} sx={{ flexDirection: "column" }} gap={0.4}>
@@ -52,11 +58,16 @@ export const Footer = () => {
           >
             The premium and sustainable linen clothing brand
           </Typography>
-          <Typography color="text.secondary" textAlign={"start"}>
+          <Typography
+            color="text.secondary"
+            textAlign={"start"}
+            fontSize={"small"}
+          >
             <Link
               href="/feedback"
               color="text.secondary"
               textTransform={"uppercase"}
+              fontSize={"small"}
             >
               Leave a review
             </Link>

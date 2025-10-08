@@ -7,7 +7,37 @@ export const theme = createTheme({
     },
     text: {
       primary: "#000000",
-      secondary: "#FFFFFF",
+      secondary: "#00E676",
+    },
+  },
+  components: {
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          color: "#000000", // labels use highlight color
+          "&.Mui-focused": { color: "#000000" },
+        },
+      },
+    },
+    MuiFormHelperText: {
+      styleOverrides: {
+        root: { color: "#000000" },
+      },
+    },
+    MuiFormLabel: {
+      styleOverrides: {
+        root: {
+          color: "#000000",
+        },
+      },
+    },
+    MuiRadio: {
+      styleOverrides: {
+        root: {
+          color: "#000000", // unchecked
+          "&.Mui-checked": { color: "#000000" }, // checked
+        },
+      },
     },
   },
   typography: {

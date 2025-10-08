@@ -7,6 +7,7 @@ import Navbar from "./Navbar";
 import { Route, Routes } from "react-router";
 import { PreLaunch } from "./PreLaunch";
 import { Footer } from "./Footer";
+import { FeedbackForm } from "./FeedbackForm";
 // import BreadCrumb from "./BreadCrumb";
 
 export const Home = () => {
@@ -27,6 +28,7 @@ export const Home = () => {
         <Routes>
           {/* <Route path="/" element={<ProductGrid></ProductGrid>} /> */}
           <Route path="/" element={<PreLaunch></PreLaunch>} />
+          <Route path="/feedback" element={<FeedbackForm></FeedbackForm>} />
         </Routes>
         <Footer></Footer>
       </Box>

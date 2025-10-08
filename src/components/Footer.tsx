@@ -1,4 +1,4 @@
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Link, Paper, Typography } from "@mui/material";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from "@mui/icons-material/Phone";
 export const Footer = () => {
@@ -12,7 +12,7 @@ export const Footer = () => {
           justifyContent: "center",
         }}
       >
-        <Box display={"flex"} sx={{ flexDirection: "column" }}>
+        <Box display={"flex"} sx={{ flexDirection: "column" }} gap={0.4}>
           <Typography
             color="text.secondary"
             textAlign={"start"}
@@ -21,14 +21,22 @@ export const Footer = () => {
           >
             Contact us
           </Typography>
-          <Typography color="text.secondary" textAlign={"start"}>
+          <Typography
+            color="text.secondary"
+            textAlign={"start"}
+            fontSize={"small"}
+          >
             <PhoneIcon fontSize="small"></PhoneIcon> +91 70759 67089
           </Typography>
-          <Typography color="text.secondary" textAlign={"start"}>
+          <Typography
+            color="text.secondary"
+            textAlign={"start"}
+            fontSize={"small"}
+          >
             <EmailIcon fontSize="small" /> support@thetruetouch.in
           </Typography>
         </Box>
-        <Box display={"flex"} sx={{ flexDirection: "column" }}>
+        <Box display={"flex"} sx={{ flexDirection: "column" }} gap={0.4}>
           <Typography
             color="text.secondary"
             textAlign={"start"}
@@ -37,8 +45,21 @@ export const Footer = () => {
           >
             THE TRUE TOUCH
           </Typography>
+          <Typography
+            color="text.secondary"
+            textAlign={"start"}
+            fontSize={"small"}
+          >
+            The premium and sustainable linen clothing brand
+          </Typography>
           <Typography color="text.secondary" textAlign={"start"}>
-            The premium linen clothing brand
+            <Link
+              href="/feedback"
+              color="text.secondary"
+              textTransform={"uppercase"}
+            >
+              Leave a review
+            </Link>
           </Typography>
         </Box>
       </Box>

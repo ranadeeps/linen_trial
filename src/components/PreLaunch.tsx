@@ -26,7 +26,7 @@ export const PreLaunch = () => {
           p: 2,
         }}
       >
-        We are going on live on 11th Oct, 2025.
+        We are going live on 11th Oct, 2025.
       </Typography>
       <Typography
         textAlign={"center"}

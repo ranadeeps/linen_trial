@@ -28,7 +28,7 @@ const Carousel = () => {
       <Typography
         sx={{
           textAlign: "center",
-          color: "#90EE90",
+          color: "text.secondary",
           fontSize: "0.6em",
           fontWeight: "800",
           textTransform: "uppercase",

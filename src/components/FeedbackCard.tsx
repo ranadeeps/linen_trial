@@ -5,7 +5,6 @@ import {
   CardContent,
   Typography,
   Button,
-  Stack,
   CircularProgress,
   Paper,
 } from "@mui/material";
@@ -84,12 +83,21 @@ export const FeedbackCards = () => {
             <CircularProgress />
           </Box>
         ) : (
-          <Stack spacing={2} direction={{ xs: "column", md: "row" }}>
+          <Box
+            display={"flex"}
+            flexDirection={{ xs: "column", md: "row" }}
+            gap={0.5}
+            flexWrap={"wrap"}
+            justifyContent={"center"}
+          >
             {feedbacks.map((fb) => (
               <Card
                 key={fb.id}
                 variant="outlined"
-                sx={{ backgroundColor: "transparent" }}
+                sx={{
+                  backgroundColor: "transparent",
+                  width: { xs: "100%", md: "40%" },
+                }}
               >
                 <CardContent>
                   <Typography variant="h6">{fb.fullName}</Typography>
@@ -113,7 +121,7 @@ export const FeedbackCards = () => {
                 </CardContent>
               </Card>
             ))}
-          </Stack>
+          </Box>
         )}
 
         {/* Pagination */}

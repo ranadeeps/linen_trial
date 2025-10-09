@@ -24,7 +24,8 @@ export const FeedbackForm = ({
   const [q4Value, setQ4Value] = useState("");
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
+    const formElement = event.currentTarget;
+    const formData = new FormData(formElement);
     const data = Object.fromEntries(formData.entries());
 
     console.log(data);
@@ -36,7 +37,7 @@ export const FeedbackForm = ({
     if (error) {
       snackBarFunction(message, "error");
     } else {
-      event.currentTarget.reset();
+      formElement.reset();
       setAgeValue("");
       setGenderValue("");
       setQ2Value("");

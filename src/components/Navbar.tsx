@@ -1,6 +1,7 @@
 // import { useState } from "react";
 import { AppBar, Toolbar, Box, Typography } from "@mui/material";
 import logo from "../assets/mark_svg.svg";
+import { Link } from "react-router";
 // import SignInWithPhone from "./SignInWithPhone";
 // import SignedInMenu from "./SignedInMenu";
 // import { logout } from "../utils/authentication";
@@ -18,17 +19,31 @@ const Navbar = () => {
     >
       <Toolbar>
         <Box
-          component="img"
-          src={logo}
-          alt="Logo"
+          component={Link}
+          to="/"
           sx={{
-            height: 45, // adjust height
-            width: "auto", // optional, keeps aspect ratio if square
-            marginRight: 0.5, // spacing between logo and text
+            display: "flex",
+            alignItems: "center",
+            textDecoration: "none",
+            color: "inherit",
+            cursor: "pointer",
+            marginRight: 0.5,
           }}
-        />
+        >
+          <Box
+            component="img"
+            src={logo}
+            alt="Logo"
+            sx={{
+              height: 45, // adjust height
+              width: "auto", // optional, keeps aspect ratio if square
+              marginRight: 0.5, // spacing between logo and text
+            }}
+          />
 
-        <Typography sx={{ fontWeight: "bold" }}>THE TRUE TOUCH</Typography>
+          <Typography sx={{ fontWeight: "bold" }}>THE TRUE TOUCH</Typography>
+        </Box>
+
         <Box sx={{ py: 1, ml: "auto" }}>
           {/* {signedInPhone ? (
             // <Typography>Signed in as {signedInPhone}</Typography>

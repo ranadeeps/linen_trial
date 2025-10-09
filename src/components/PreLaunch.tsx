@@ -11,9 +11,9 @@ export const PreLaunch = () => {
         width: "100%",
         boxSizing: "border-box",
         borderRadius: 0,
-        mt: 2,
         justifyContent: "center",
         alignItems: "center",
+        backgroundColor: "primary.main",
       }}
     >
       <Typography
@@ -48,13 +48,13 @@ export const PreLaunch = () => {
           fontWeight: "300",
           textTransform: "uppercase",
           textAlign: "justify",
-
           p: 2,
         }}
       >
         <Link
           href="https://zfrmz.in/CVton98r7bKXGnFPlMQq?referrername=11thOctober2025"
           target="_blank"
+          color="text.primary"
         >
           Interested folks need to register here to be part of our launch.
         </Link>

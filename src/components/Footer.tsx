@@ -3,7 +3,7 @@ import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from "@mui/icons-material/Phone";
 export const Footer = () => {
   return (
-    <Paper sx={{ backgroundColor: "primary.main", borderRadius: 0, p: 2 }}>
+    <Paper sx={{ backgroundColor: "secondary.main", borderRadius: 0, p: 2 }}>
       <Box
         display={"flex"}
         sx={{
@@ -36,7 +36,6 @@ export const Footer = () => {
 
           <Box display="flex" alignItems="center" gap={1}>
             <EmailIcon fontSize="small" sx={{ color: "text.secondary" }} />
-
             <Typography
               color="text.secondary"
               textAlign={"start"}

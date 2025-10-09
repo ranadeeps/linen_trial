@@ -21,7 +21,7 @@ const Carousel = () => {
     <Box
       sx={{
         m: 0,
-        backgroundColor: "black",
+        backgroundColor: "secondary.main",
         py: 1,
       }}
     >

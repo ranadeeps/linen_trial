@@ -2,7 +2,7 @@ import api from "./api";
 
 export interface ApiResponse<T> {
   data: T | null;
-  message: string | null;
+  message: string;
   error: string | any | null;
 }
 
@@ -16,7 +16,7 @@ export const postRequest = async <T>(
         return status < 400;
       },
     });
-    return { data: response.data, error: null, message: null };
+    return { data: response.data, error: null, message: "" };
   } catch (error: any) {
     return {
       data: null,
@@ -37,7 +37,7 @@ export const getRequest = async <T>(
         return status < 400;
       },
     });
-    return { data: response.data, error: null, message: null };
+    return { data: response.data, error: null, message: "" };
   } catch (error: any) {
     return {
       data: null,

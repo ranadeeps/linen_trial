@@ -3,17 +3,61 @@ import {
   Button,
   FormControl,
   FormControlLabel,
-  FormLabel,
   Paper,
   Radio,
   RadioGroup,
   TextField,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import React, { useState } from "react";
+import { postRequest } from "../utils/requests";
 
-export const FeedbackForm = () => {
+export const FeedbackForm = ({
+  snackBarFunction,
+}: {
+  snackBarFunction: (message: string, severity?: string) => void;
+}) => {
   const [showFields, setShowFields] = useState([false, false]);
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const data = Object.fromEntries(formData.entries());
+    // event.currentTarget.reset();
+    console.log(data);
+    const {
+      data: response,
+      error,
+      message,
+    } = await postRequest<any>("/products/feedbacks/save-feedback", data);
+    if (error) {
+      snackBarFunction(message);
+    } else {
+      snackBarFunction("Feedback received");
+    }
+    console.log(response, error, message);
+    setShowFields([false, false]);
+  };
+
+  // New enhanced style object
+  const focusVisibleSx = {
+    // Target the root of FormControlLabel (which uses ButtonBase internally)
+    "&.Mui-focusVisible": {
+      backgroundColor: "transparent !important", // Use !important as a last resort for ButtonBase
+    },
+    // Target the specific area where the focus ring might be applied (ButtonBase/Radio wrapper)
+    "& .MuiButtonBase-root": {
+      "&.Mui-focusVisible": {
+        backgroundColor: "transparent !important",
+      },
+    },
+    // Ensure the label text itself isn't picking up a background
+    "& .MuiFormControlLabel-label": {
+      "&.Mui-focusVisible": {
+        backgroundColor: "transparent",
+      },
+    },
+  };
+
   return (
     <Paper
       sx={{
@@ -23,9 +67,9 @@ export const FeedbackForm = () => {
         width: "100%",
         boxSizing: "border-box",
         borderRadius: 0,
-        mt: 2,
         px: 2,
         pb: 2,
+        backgroundColor: "primary.main",
       }}
     >
       <Box
@@ -37,37 +81,39 @@ export const FeedbackForm = () => {
           mx: "auto",
         }}
         component={"form"}
+        onSubmit={handleSubmit}
       >
         <Typography textTransform={"uppercase"} fontWeight={"bold"}>
           Share your experience
         </Typography>
+        <TextField
+          id="fullName"
+          name="fullName"
+          label="FULL NAME"
+          variant="outlined"
+          size="small"
+          fullWidth
+          slotProps={{
+            inputLabel: {
+              sx: {
+                fontSize: "small",
+                color: "#135638", // eco-green
+              },
+            },
+          }}
+          required
+        />
         <FormControl
           sx={{
             display: "flex",
             flexDirection: "column",
-            "& .MuiFormControlLabel-label": { fontSize: "small" },
           }}
         >
-          <TextField
-            id="full_name"
-            label="FULL NAME"
-            variant="outlined"
-            size="small"
-            fullWidth
-            slotProps={{
-              inputLabel: {
-                sx: {
-                  fontSize: "small",
-                  color: "#000000", // eco-green
-                },
-              },
-            }}
-            sx={{ mb: 2 }}
-            required
-          />
-          <FormLabel id="age" sx={{ fontSize: "small" }} required>
+          <Typography id="age" component="legend" sx={{ fontSize: "small" }}>
             Age
-          </FormLabel>
+            {/* Manually add the required asterisk if needed */}
+            <span style={{ color: "red" }}>*</span>
+          </Typography>
           <RadioGroup
             row
             aria-labelledby="age"
@@ -76,6 +122,7 @@ export const FeedbackForm = () => {
               display: "flex",
               flexWrap: "wrap",
               gap: 0.5, // space between items
+              fontSize: "small",
             }}
           >
             {[
@@ -94,88 +141,109 @@ export const FeedbackForm = () => {
                 label={label}
                 sx={{
                   flex: "0 1 150px", // min-width 120px, allow shrink/wrap
+                  ...focusVisibleSx, // 👈 APPLIED THE FIX HERE
                 }}
               />
             ))}
           </RadioGroup>
-          <FormLabel id="gender" sx={{ fontSize: "small" }} required>
+        </FormControl>
+        <FormControl>
+          <Typography id="gender" component="legend" sx={{ fontSize: "small" }}>
             Gender
-          </FormLabel>
+            {/* Manually add the required asterisk if needed */}
+            <span style={{ color: "red" }}>*</span>
+          </Typography>
           <RadioGroup row aria-labelledby="gender" name="gender">
             <FormControlLabel
               value="female"
               control={<Radio />}
               label="Female"
+              sx={focusVisibleSx} // 👈 APPLIED THE FIX HERE
             />
-            <FormControlLabel value="male" control={<Radio />} label="Male" />
+            <FormControlLabel
+              value="male"
+              control={<Radio />}
+              label="Male"
+              sx={focusVisibleSx} // 👈 APPLIED THE FIX HERE
+            />
             <FormControlLabel
               value="others"
               control={<Radio />}
               label="Others"
+              sx={focusVisibleSx} // 👈 APPLIED THE FIX HERE
             />
           </RadioGroup>
-          <TextField
-            id="mobile_number"
-            label="Mobile Number"
-            variant="outlined"
-            type="tel"
-            size="small"
-            fullWidth
-            slotProps={{
-              htmlInput: { inputMode: "tel", pattern: "[0-9]*", maxLength: 10 },
-              inputLabel: {
-                sx: {
-                  fontSize: "small",
-                  color: "#000000", // eco-green
-                },
+        </FormControl>
+        <TextField
+          id="mobileNumber"
+          name="mobileNumber"
+          label="Mobile Number"
+          variant="outlined"
+          type="tel"
+          size="small"
+          fullWidth
+          slotProps={{
+            htmlInput: {
+              inputMode: "tel",
+              pattern: "[0-9]*",
+              maxLength: 10,
+              minLength: 10,
+            },
+            inputLabel: {
+              sx: {
+                fontSize: "small",
+                color: "#135638", // eco-green
               },
-            }}
-            sx={{ mb: 2 }}
-            required
-          />
-          <TextField
-            id="email_id"
-            label="Email ID"
-            variant="outlined"
-            type="email"
-            size="small"
-            fullWidth
-            slotProps={{
-              htmlInput: {
-                inputMode: "email",
+            },
+          }}
+          required
+        />
+        <TextField
+          id="emailId"
+          name="emailId"
+          label="Email ID"
+          variant="outlined"
+          type="email"
+          size="small"
+          fullWidth
+          slotProps={{
+            htmlInput: {
+              inputMode: "email",
+            },
+            inputLabel: {
+              sx: {
+                fontSize: "small",
+                color: "#135638", // eco-green
               },
-              inputLabel: {
-                sx: {
-                  fontSize: "small",
-                  color: "#000000", // eco-green
-                },
-              },
-            }}
-            sx={{ mb: 2 }}
-            required
-          />
+            },
+          }}
+          required
+        />
 
-          <TextField
-            id="q1"
-            label="What did you make about our launch event today?"
-            multiline
-            rows={2}
-            slotProps={{
-              inputLabel: {
-                sx: {
-                  fontSize: "small",
-                  color: "#000000", // eco-green
-                },
+        <TextField
+          id="q1"
+          name="q1"
+          label="What did you make about our launch event today?"
+          multiline
+          rows={2}
+          slotProps={{
+            inputLabel: {
+              sx: {
+                fontSize: "small",
+                color: "#135638", // eco-green
               },
-            }}
-            sx={{ mb: 2 }}
-          />
-          <FormLabel id="q2" sx={{ fontSize: "small" }} required>
+            },
+          }}
+        />
+        <FormControl>
+          <Typography id="q2" component="legend" sx={{ fontSize: "small" }}>
             Did you make a purchase decision?
-          </FormLabel>
+            {/* Manually add the required asterisk if needed */}
+            <span style={{ color: "red" }}>*</span>
+          </Typography>
           <RadioGroup
             row
-            aria-labelledby="q1"
+            aria-labelledby="q2"
             name="q2"
             onChange={(event) =>
               event.target.value == "no"
@@ -188,32 +256,42 @@ export const FeedbackForm = () => {
               control={<Radio />}
               label="Yes"
               defaultChecked
+              sx={focusVisibleSx} // 👈 APPLIED THE FIX HERE
             />
-            <FormControlLabel value="no" control={<Radio />} label="No" />
+            <FormControlLabel
+              value="no"
+              control={<Radio />}
+              label="No"
+              sx={focusVisibleSx} // 👈 APPLIED THE FIX HERE
+            />
           </RadioGroup>
-          {showFields[0] && (
-            <TextField
-              id="q3"
-              label="Make us improve?"
-              multiline
-              rows={2}
-              slotProps={{
-                inputLabel: {
-                  sx: {
-                    fontSize: "small",
-                    color: "#000000", // eco-green
-                  },
+        </FormControl>
+        {showFields[0] && (
+          <TextField
+            id="q3"
+            name="q3"
+            label="Make us improve?"
+            multiline
+            rows={2}
+            slotProps={{
+              inputLabel: {
+                sx: {
+                  fontSize: "small",
+                  color: "#135638", // eco-green
                 },
-              }}
-              sx={{ mb: 2 }}
-            />
-          )}
-          {showFields[1] && (
-            <>
-              <FormLabel id="q4" sx={{ fontSize: "small" }}>
+              },
+            }}
+          />
+        )}
+        {showFields[1] && (
+          <>
+            <FormControl>
+              <Typography id="q4" component="legend" sx={{ fontSize: "small" }}>
                 Would you be open to sharing feedback about the product usage at
                 a later stage?
-              </FormLabel>
+                {/* Manually add the required asterisk if needed */}
+                <span style={{ color: "red" }}>*</span>
+              </Typography>
 
               <RadioGroup row aria-labelledby="q4" name="q4">
                 <FormControlLabel
@@ -221,15 +299,21 @@ export const FeedbackForm = () => {
                   control={<Radio />}
                   label="Yes"
                   defaultChecked
+                  sx={focusVisibleSx} // 👈 APPLIED THE FIX HERE
                 />
-                <FormControlLabel value="no" control={<Radio />} label="No" />
+                <FormControlLabel
+                  value="no"
+                  control={<Radio />}
+                  label="No"
+                  sx={focusVisibleSx} // 👈 APPLIED THE FIX HERE
+                />
               </RadioGroup>
-            </>
-          )}
-          <Button variant="outlined" type="submit">
-            Submit
-          </Button>
-        </FormControl>
+            </FormControl>
+          </>
+        )}
+        <Button variant="outlined" type="submit" sx={{ color: "text.primary" }}>
+          Submit
+        </Button>
       </Box>
     </Paper>
   );

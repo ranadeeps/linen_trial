@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://ranadeepreddyshyamakura.info/api", // Replace with your backend API
+  baseURL: "https://thetruetouch.in/api", // Replace with your backend API
   headers: {
     "Content-Type": "application/json",
   },

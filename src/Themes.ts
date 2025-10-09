@@ -107,5 +107,8 @@ export const theme = createTheme({
     body1: {
       letterSpacing: "0.1em",
     },
+    body2: {
+      letterSpacing: "0.1em",
+    },
   },
 });

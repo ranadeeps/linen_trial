@@ -8,8 +8,9 @@ import { Route, Routes } from "react-router";
 import { PreLaunch } from "./PreLaunch";
 import { Footer } from "./Footer";
 import { FeedbackForm } from "./FeedbackForm";
-import { Snackbar } from "@mui/material";
+import { Alert, Snackbar } from "@mui/material";
 import React from "react";
+import { FeedbackCards } from "./FeedbackCard";
 // import BreadCrumb from "./BreadCrumb";
 
 export const Home = () => {
@@ -17,12 +18,17 @@ export const Home = () => {
   //   open: boolean;
   //   message: string;
   // }
-  const [snackBar, setSnackBar] = React.useState({
+  const [snackBar, setSnackBar] = React.useState<{
+    open: boolean;
+    message: string;
+    type: "success" | "error";
+  }>({
     open: false,
     message: "",
+    type: "success",
   });
-  const openSnackBar = (message: string) => {
-    setSnackBar({ open: true, message });
+  const openSnackBar = (message: string, type: "success" | "error") => {
+    setSnackBar({ open: true, message, type });
   };
 
   const closeSnackBar = () => {
@@ -43,9 +49,10 @@ export const Home = () => {
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
           open={snackBar.open}
           autoHideDuration={3000}
-          message={snackBar.message}
           onClose={closeSnackBar}
-        />
+        >
+          <Alert severity={snackBar.type}>{snackBar.message}</Alert>
+        </Snackbar>
         <Carousel />
         <Navbar />
         {/* <BreadCrumb /> */}
@@ -57,6 +64,10 @@ export const Home = () => {
             element={
               <FeedbackForm snackBarFunction={openSnackBar}></FeedbackForm>
             }
+          />
+          <Route
+            path="/get-feedbacks"
+            element={<FeedbackCards></FeedbackCards>}
           />
         </Routes>
         <Footer></Footer>

@@ -15,14 +15,18 @@ import { postRequest } from "../utils/requests";
 export const FeedbackForm = ({
   snackBarFunction,
 }: {
-  snackBarFunction: (message: string, severity?: string) => void;
+  snackBarFunction: (message: string, type: "success" | "error") => void;
 }) => {
   const [showFields, setShowFields] = useState([false, false]);
+  const [ageValue, setAgeValue] = useState("");
+  const [genderValue, setGenderValue] = useState("");
+  const [q2Value, setQ2Value] = useState("");
+  const [q4Value, setQ4Value] = useState("");
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const data = Object.fromEntries(formData.entries());
-    // event.currentTarget.reset();
+
     console.log(data);
     const {
       data: response,
@@ -30,33 +34,38 @@ export const FeedbackForm = ({
       message,
     } = await postRequest<any>("/products/feedbacks/save-feedback", data);
     if (error) {
-      snackBarFunction(message);
+      snackBarFunction(message, "error");
     } else {
-      snackBarFunction("Feedback received");
+      event.currentTarget.reset();
+      setAgeValue("");
+      setGenderValue("");
+      setQ2Value("");
+      setQ4Value("");
+      snackBarFunction("Feedback received", "success");
     }
     console.log(response, error, message);
     setShowFields([false, false]);
   };
 
-  // New enhanced style object
-  const focusVisibleSx = {
-    // Target the root of FormControlLabel (which uses ButtonBase internally)
-    "&.Mui-focusVisible": {
-      backgroundColor: "transparent !important", // Use !important as a last resort for ButtonBase
-    },
-    // Target the specific area where the focus ring might be applied (ButtonBase/Radio wrapper)
-    "& .MuiButtonBase-root": {
-      "&.Mui-focusVisible": {
-        backgroundColor: "transparent !important",
-      },
-    },
-    // Ensure the label text itself isn't picking up a background
-    "& .MuiFormControlLabel-label": {
-      "&.Mui-focusVisible": {
-        backgroundColor: "transparent",
-      },
-    },
-  };
+  // // New enhanced style object
+  // const focusVisibleSx = {
+  //   // Target the root of FormControlLabel (which uses ButtonBase internally)
+  //   "&.Mui-focusVisible": {
+  //     backgroundColor: "transparent !important", // Use !important as a last resort for ButtonBase
+  //   },
+  //   // Target the specific area where the focus ring might be applied (ButtonBase/Radio wrapper)
+  //   "& .MuiButtonBase-root": {
+  //     "&.Mui-focusVisible": {
+  //       backgroundColor: "transparent !important",
+  //     },
+  //   },
+  //   // Ensure the label text itself isn't picking up a background
+  //   "& .MuiFormControlLabel-label": {
+  //     "&.Mui-focusVisible": {
+  //       backgroundColor: "transparent",
+  //     },
+  //   },
+  // };
 
   return (
     <Paper
@@ -124,6 +133,8 @@ export const FeedbackForm = ({
               gap: 0.5, // space between items
               fontSize: "small",
             }}
+            value={ageValue}
+            onChange={(e) => setAgeValue(e.target.value)}
           >
             {[
               ["under_18", "Under 18"],
@@ -141,7 +152,7 @@ export const FeedbackForm = ({
                 label={label}
                 sx={{
                   flex: "0 1 150px", // min-width 120px, allow shrink/wrap
-                  ...focusVisibleSx, // 👈 APPLIED THE FIX HERE
+                  // ...focusVisibleSx, // 👈 APPLIED THE FIX HERE
                 }}
               />
             ))}
@@ -153,24 +164,30 @@ export const FeedbackForm = ({
             {/* Manually add the required asterisk if needed */}
             <span style={{ color: "red" }}>*</span>
           </Typography>
-          <RadioGroup row aria-labelledby="gender" name="gender">
+          <RadioGroup
+            row
+            aria-labelledby="gender"
+            name="gender"
+            value={genderValue}
+            onChange={(e) => setGenderValue(e.target.value)}
+          >
             <FormControlLabel
               value="female"
               control={<Radio />}
               label="Female"
-              sx={focusVisibleSx} // 👈 APPLIED THE FIX HERE
+              // sx={focusVisibleSx} // 👈 APPLIED THE FIX HERE
             />
             <FormControlLabel
               value="male"
               control={<Radio />}
               label="Male"
-              sx={focusVisibleSx} // 👈 APPLIED THE FIX HERE
+              // sx={focusVisibleSx} // 👈 APPLIED THE FIX HERE
             />
             <FormControlLabel
               value="others"
               control={<Radio />}
               label="Others"
-              sx={focusVisibleSx} // 👈 APPLIED THE FIX HERE
+              // sx={focusVisibleSx} // 👈 APPLIED THE FIX HERE
             />
           </RadioGroup>
         </FormControl>
@@ -182,6 +199,7 @@ export const FeedbackForm = ({
           type="tel"
           size="small"
           fullWidth
+          helperText="Enter 10 digit mobile number"
           slotProps={{
             htmlInput: {
               inputMode: "tel",
@@ -223,13 +241,14 @@ export const FeedbackForm = ({
         <TextField
           id="q1"
           name="q1"
-          label="What did you make about our launch event today?"
+          label="What did you make about our launch event today (11th Oct, 2025)?"
           multiline
           rows={2}
           slotProps={{
             inputLabel: {
               sx: {
                 fontSize: "small",
+                textWrap: "wrap",
                 color: "#135638", // eco-green
               },
             },
@@ -245,24 +264,26 @@ export const FeedbackForm = ({
             row
             aria-labelledby="q2"
             name="q2"
-            onChange={(event) =>
+            onChange={(event) => {
               event.target.value == "no"
                 ? setShowFields([true, false])
-                : setShowFields([false, true])
-            }
+                : setShowFields([false, true]);
+              setQ2Value(event.target.value);
+            }}
+            value={q2Value}
           >
             <FormControlLabel
               value="yes"
               control={<Radio />}
               label="Yes"
               defaultChecked
-              sx={focusVisibleSx} // 👈 APPLIED THE FIX HERE
+              // sx={focusVisibleSx} // 👈 APPLIED THE FIX HERE
             />
             <FormControlLabel
               value="no"
               control={<Radio />}
               label="No"
-              sx={focusVisibleSx} // 👈 APPLIED THE FIX HERE
+              // sx={focusVisibleSx} // 👈 APPLIED THE FIX HERE
             />
           </RadioGroup>
         </FormControl>
@@ -270,7 +291,7 @@ export const FeedbackForm = ({
           <TextField
             id="q3"
             name="q3"
-            label="Make us improve?"
+            label="Please let us know why?"
             multiline
             rows={2}
             slotProps={{
@@ -293,19 +314,25 @@ export const FeedbackForm = ({
                 <span style={{ color: "red" }}>*</span>
               </Typography>
 
-              <RadioGroup row aria-labelledby="q4" name="q4">
+              <RadioGroup
+                row
+                aria-labelledby="q4"
+                name="q4"
+                value={q4Value}
+                onChange={(e) => setQ4Value(e.target.value)}
+              >
                 <FormControlLabel
                   value="yes"
                   control={<Radio />}
                   label="Yes"
                   defaultChecked
-                  sx={focusVisibleSx} // 👈 APPLIED THE FIX HERE
+                  // sx={focusVisibleSx} // 👈 APPLIED THE FIX HERE
                 />
                 <FormControlLabel
                   value="no"
                   control={<Radio />}
                   label="No"
-                  sx={focusVisibleSx} // 👈 APPLIED THE FIX HERE
+                  // sx={focusVisibleSx} // 👈 APPLIED THE FIX HERE
                 />
               </RadioGroup>
             </FormControl>

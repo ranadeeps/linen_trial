@@ -21,26 +21,30 @@ export const Footer = () => {
           >
             Contact us
           </Typography>
-          <Typography
-            color="text.secondary"
-            textAlign={"start"}
-            fontSize={"small"}
-          >
-            <Box display="flex" alignItems="center" gap={1}>
-              <PhoneIcon fontSize="small"> </PhoneIcon>
+
+          <Box display="flex" alignItems="center" gap={1}>
+            <PhoneIcon fontSize="small" sx={{ color: "text.secondary" }} />
+
+            <Typography
+              color="text.secondary"
+              textAlign={"start"}
+              fontSize={"small"}
+            >
               <span> +91 70759 67089</span>
-            </Box>
-          </Typography>
-          <Typography
-            color="text.secondary"
-            textAlign={"start"}
-            fontSize={"small"}
-          >
-            <Box display="flex" alignItems="center" gap={1}>
-              <EmailIcon fontSize="small" />{" "}
+            </Typography>
+          </Box>
+
+          <Box display="flex" alignItems="center" gap={1}>
+            <EmailIcon fontSize="small" sx={{ color: "text.secondary" }} />
+
+            <Typography
+              color="text.secondary"
+              textAlign={"start"}
+              fontSize={"small"}
+            >
               <span> support@thetruetouch.in</span>
-            </Box>
-          </Typography>
+            </Typography>
+          </Box>
         </Box>
         <Box display={"flex"} sx={{ flexDirection: "column" }} gap={0.4}>
           <Typography

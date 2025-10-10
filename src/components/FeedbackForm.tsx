@@ -58,9 +58,9 @@ export const FeedbackForm = ({
       setQ2Value("");
       setQ4Value("");
       snackBarFunction("Feedback received", "success");
+      setShowFields([false, false]);
     }
     console.log(response, error, message);
-    setShowFields([false, false]);
   };
 
   return (

@@ -59,7 +59,7 @@ export const Footer = () => {
             textAlign={"start"}
             fontSize={"small"}
           >
-            The premium and sustainable linen clothing brand
+            Conscious clothing choices for a greener tomorrow
           </Typography>
           <Typography
             color="text.secondary"

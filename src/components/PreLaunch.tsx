@@ -51,13 +51,15 @@ export const PreLaunch = () => {
           p: 2,
         }}
       >
+        Interested folks need to{" "}
         <Link
           href="https://zfrmz.in/CVton98r7bKXGnFPlMQq?referrername=11thOctober2025"
           target="_blank"
           color="text.primary"
         >
-          Interested folks need to register here to be part of our launch.
-        </Link>
+          register here
+        </Link>{" "}
+        to be part of our launch.
       </Typography>
     </Paper>
   );

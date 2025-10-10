@@ -3,6 +3,7 @@ import {
   Button,
   FormControl,
   FormControlLabel,
+  FormHelperText,
   Paper,
   Radio,
   RadioGroup,
@@ -21,14 +22,28 @@ export const FeedbackForm = ({
   const [ageValue, setAgeValue] = useState("");
   const [genderValue, setGenderValue] = useState("");
   const [q2Value, setQ2Value] = useState("");
+  const [q2Error, setQ2Error] = useState(false);
   const [q4Value, setQ4Value] = useState("");
+  const [q4Error, setQ4Error] = useState(false);
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     const formElement = event.currentTarget;
     const formData = new FormData(formElement);
     const data = Object.fromEntries(formData.entries());
-
-    console.log(data);
+    if (!q2Value) {
+      setQ2Error(true);
+      return;
+    } else {
+      setQ2Error(false);
+    }
+    if (q2Value.toLowerCase() == "yes" && !q4Value) {
+      setQ4Error(true);
+      return;
+    } else {
+      setQ4Error(false);
+    }
     const {
       data: response,
       error,
@@ -47,26 +62,6 @@ export const FeedbackForm = ({
     console.log(response, error, message);
     setShowFields([false, false]);
   };
-
-  // // New enhanced style object
-  // const focusVisibleSx = {
-  //   // Target the root of FormControlLabel (which uses ButtonBase internally)
-  //   "&.Mui-focusVisible": {
-  //     backgroundColor: "transparent !important", // Use !important as a last resort for ButtonBase
-  //   },
-  //   // Target the specific area where the focus ring might be applied (ButtonBase/Radio wrapper)
-  //   "& .MuiButtonBase-root": {
-  //     "&.Mui-focusVisible": {
-  //       backgroundColor: "transparent !important",
-  //     },
-  //   },
-  //   // Ensure the label text itself isn't picking up a background
-  //   "& .MuiFormControlLabel-label": {
-  //     "&.Mui-focusVisible": {
-  //       backgroundColor: "transparent",
-  //     },
-  //   },
-  // };
 
   return (
     <Paper
@@ -118,11 +113,12 @@ export const FeedbackForm = ({
             display: "flex",
             flexDirection: "column",
           }}
+          required
         >
           <Typography id="age" component="legend" sx={{ fontSize: "small" }}>
             Age
             {/* Manually add the required asterisk if needed */}
-            <span style={{ color: "red" }}>*</span>
+            <span style={{ color: "text.primary" }}>*</span>
           </Typography>
           <RadioGroup
             row
@@ -153,7 +149,6 @@ export const FeedbackForm = ({
                 label={label}
                 sx={{
                   flex: "0 1 150px", // min-width 120px, allow shrink/wrap
-                  // ...focusVisibleSx, // 👈 APPLIED THE FIX HERE
                 }}
               />
             ))}
@@ -163,7 +158,7 @@ export const FeedbackForm = ({
           <Typography id="gender" component="legend" sx={{ fontSize: "small" }}>
             Gender
             {/* Manually add the required asterisk if needed */}
-            <span style={{ color: "red" }}>*</span>
+            <span style={{ color: "text.primary" }}>*</span>
           </Typography>
           <RadioGroup
             row
@@ -172,24 +167,18 @@ export const FeedbackForm = ({
             value={genderValue}
             onChange={(e) => setGenderValue(e.target.value)}
           >
-            <FormControlLabel
-              value="female"
-              control={<Radio />}
-              label="Female"
-              // sx={focusVisibleSx} // 👈 APPLIED THE FIX HERE
-            />
-            <FormControlLabel
-              value="male"
-              control={<Radio />}
-              label="Male"
-              // sx={focusVisibleSx} // 👈 APPLIED THE FIX HERE
-            />
-            <FormControlLabel
-              value="others"
-              control={<Radio />}
-              label="Others"
-              // sx={focusVisibleSx} // 👈 APPLIED THE FIX HERE
-            />
+            {[
+              ["male", "Male"],
+              ["female", "Female"],
+              ["others", "Others"],
+            ].map(([value, label]) => (
+              <FormControlLabel
+                value={value}
+                control={<Radio />}
+                label={label}
+                key={value}
+              />
+            ))}
           </RadioGroup>
         </FormControl>
         <TextField
@@ -259,7 +248,7 @@ export const FeedbackForm = ({
           <Typography id="q2" component="legend" sx={{ fontSize: "small" }}>
             Did you make a purchase decision?
             {/* Manually add the required asterisk if needed */}
-            <span style={{ color: "red" }}>*</span>
+            <span style={{ color: "text.primary" }}>*</span>
           </Typography>
           <RadioGroup
             row
@@ -278,15 +267,14 @@ export const FeedbackForm = ({
               control={<Radio />}
               label="Yes"
               defaultChecked
-              // sx={focusVisibleSx} // 👈 APPLIED THE FIX HERE
             />
-            <FormControlLabel
-              value="no"
-              control={<Radio />}
-              label="No"
-              // sx={focusVisibleSx} // 👈 APPLIED THE FIX HERE
-            />
+            <FormControlLabel value="no" control={<Radio />} label="No" />
           </RadioGroup>
+          {q2Error && (
+            <FormHelperText sx={{ color: "red" }}>
+              This is a required field
+            </FormHelperText>
+          )}
         </FormControl>
         {showFields[0] && (
           <TextField
@@ -312,7 +300,7 @@ export const FeedbackForm = ({
                 Would you be open to sharing feedback about the product usage at
                 a later stage?
                 {/* Manually add the required asterisk if needed */}
-                <span style={{ color: "red" }}>*</span>
+                <span style={{ color: "text.primary" }}>*</span>
               </Typography>
 
               <RadioGroup
@@ -327,15 +315,14 @@ export const FeedbackForm = ({
                   control={<Radio />}
                   label="Yes"
                   defaultChecked
-                  // sx={focusVisibleSx} // 👈 APPLIED THE FIX HERE
                 />
-                <FormControlLabel
-                  value="no"
-                  control={<Radio />}
-                  label="No"
-                  // sx={focusVisibleSx} // 👈 APPLIED THE FIX HERE
-                />
+                <FormControlLabel value="no" control={<Radio />} label="No" />
               </RadioGroup>
+              {q4Error && (
+                <FormHelperText sx={{ color: "red" }}>
+                  This is a required field
+                </FormHelperText>
+              )}
             </FormControl>
           </>
         )}

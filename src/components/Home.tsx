@@ -11,6 +11,7 @@ import { FeedbackForm } from "./FeedbackForm";
 import { Alert, Snackbar } from "@mui/material";
 import React from "react";
 import { FeedbackCards } from "./FeedbackCard";
+import { Chat } from "./Chat";
 // import BreadCrumb from "./BreadCrumb";
 
 export const Home = () => {
@@ -69,6 +70,7 @@ export const Home = () => {
             path="/get-feedbacks"
             element={<FeedbackCards></FeedbackCards>}
           />
+          <Route path="/chat" element={<Chat></Chat>} />
         </Routes>
         <Footer></Footer>
       </Box>
